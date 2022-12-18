@@ -222,9 +222,10 @@ export const sortSchedule = (tmp, date) => {
     let from = moment(date + ' ' + i[0]).format('YYYY-MM-DD HH:mm')
     let to = moment(date + ' ' + i[1]).format('YYYY-MM-DD HH:mm')
     let status = i[2]
-    let username = i[3]
-    let schedID = i[4]
-    temp.push({ from, to, status, username, schedID })
+    let name = i[3]
+    let username = i[4]
+    let schedID = i[5]
+    temp.push({ from, to, status, name, username, schedID })
   }
   return temp
 }

@@ -205,7 +205,7 @@ const CreatePriority = ({ setPriorityModal }) => {
   return (
     <>
       <div className="fixed top-0 left-0 z-30 flex h-screen w-screen items-center justify-center bg-black/50 bg-white">
-        <div className="w-3/4 max-w-selectedDate rounded-md bg-white p-4">
+        <div className="w-1/2 rounded-md bg-white p-4">
           <p className="font-bold">Create priority schedule</p>
           {notifBox &&
             (success ? (
@@ -215,8 +215,8 @@ const CreatePriority = ({ setPriorityModal }) => {
             ) : (
               <p className="bg-red-500 p-4 text-white">{errorMessage}</p>
             ))}
-          <div className="align-center justify-content-center flex flex-row gap-x-4 py-2">
-            <div className="gap-y-1">
+          <div className="align-center justify-content-center flex flex-row gap-x-2 py-2">
+            <div className="w-2/3 mt-2">
               <p>First name</p>
               <input
                 ref={firstName}
@@ -226,8 +226,28 @@ const CreatePriority = ({ setPriorityModal }) => {
               <input
                 ref={lastName}
                 className="my-2 mt-2 w-full rounded-md border border-inputBorder px-4 py-3"
+              />   
+              <p>Address</p>
+                <input
+                  ref={address}
+                  className="my-2 w-full rounded-md border border-inputBorder px-4 py-3"
+                />
+              <p>Concern</p>
+                <input
+                  ref={concern}
+                  className="my-2 w-full rounded-md border border-inputBorder px-4 py-3"
+                />
+              <p>Contact Number</p>
+                <input
+                  placeholder="9XXXXXXXXX"
+                  ref={contact}
+                  type="number"
+                  className="my-2 w-full rounded-md border border-inputBorder px-4 py-3"
               />
+            </div>
+          
 
+            <div className="w-1/3 mt-2 gap-y-1">
               <p>Date</p>
               <input
                 min={moment().format('YYYY-MM-DD')}
@@ -252,25 +272,6 @@ const CreatePriority = ({ setPriorityModal }) => {
                 type="time"
                 className="my-2 w-full rounded-md border border-inputBorder px-4 py-3"
               />
-            </div>
-            <div className="gap-y-1">
-              <p>Contact Number</p>
-              <input
-                placeholder="9XXXXXXXXX"
-                ref={contact}
-                type="number"
-                className="my-2 w-full rounded-md border border-inputBorder px-4 py-3"
-              />
-              <p>Address</p>
-              <input
-                ref={address}
-                className="my-2 w-full rounded-md border border-inputBorder px-4 py-3"
-              />
-              <p>Concern</p>
-              <input
-                ref={concern}
-                className="my-2 w-full rounded-md border border-inputBorder px-4 py-3"
-              />
               <p>Health Professional</p>
               <select
                 ref={username}
@@ -281,6 +282,7 @@ const CreatePriority = ({ setPriorityModal }) => {
                     <option key={item._id}>{item.username}</option>
                   ))}
               </select>
+              
             </div>
             <p className="my-3"></p>
           </div>

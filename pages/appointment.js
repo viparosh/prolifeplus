@@ -41,7 +41,7 @@ function appointment() {
   const timeRange = useRef([])
   const [modal, setModal] = useState(false)
   const [sampleTimer,setSampleTimer] = useState(0)
-
+  
   const triggerTime = async() => {
     if (contactRef.current.value.length != 10 || contactRef.current.value[0] != 9) {
       setErrors({ ...errors, contactError: 'Invalid mobile number' })
@@ -291,20 +291,6 @@ function appointment() {
           href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap"
         />
       </Head>
-      {/* {modal && (
-        <Modal title="Appointment Policy">
-          <p>
-            It seems like you already have a pending appointment, you can
-            request another when your appointment is done
-          </p>
-          <button
-            className="mt-2 w-full rounded-md bg-primaryBtn px-4 py-2 text-white"
-            onClick={() => setModal(false)}
-          >
-            Okay, I understand
-          </button>
-        </Modal>
-      )} */}
       {success ? (
         <div className="m-auto min-h-screen lg:flex lg:items-center lg:justify-center">
           <div className="rounded-md bg-white p-6 text-center drop-shadow-2xl lg:p-16">
@@ -411,7 +397,6 @@ function appointment() {
                         className="mt-2 min-w-requestBtn rounded-md  rounded-l-none border border-primaryBtnBorder bg-primaryBtn px-4 py-2 text-white "
                       >
                         {sampleTimer == 0 ? 'Request' : sampleTimer}
-                        {/* {timer.active ? '[ ' + sampleTimer + "'s ]" : 'Request'} */}
                       </button>
                     </div>
                   </div>
@@ -520,9 +505,12 @@ function appointment() {
                       (item, index) =>
                         item.status && (
                           <option value={index} key={index}>
-                            {item.user_id}
+                         
                             {moment(item.from).format('hh:mm A')} -{' '}
-                            {moment(item.to).format('hh:mm A')}
+                            {moment(item.to).format('hh:mm A - ')} 
+                    
+                            {item.name}
+                     
                           </option>
                         )
                     )}

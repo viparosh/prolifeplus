@@ -88,6 +88,8 @@ const RequestedTable = ({ setData, data, update, header }) => {
     }
   }
   const acceptedHandler = async () => {
+    console.log(timeSelected.name)
+    
     const newData = {
       status: 'accepted',
     }
@@ -110,15 +112,19 @@ const RequestedTable = ({ setData, data, update, header }) => {
     for (let i of reference) {
       let from = moment(i.from).format('HH:mm')
       let to = moment(i.to).format('HH:mm')
+      let name = i.name
       let status = i.status
       let username = i.username
-      temp.push([from, to, status, username, i.schedID])
+      temp.push([from, to, status, name, username, i.schedID])
     }
+
+    console.log(timeSelected.name)
 
     temp.push([
       moment(timeSelected.from).format('HH:mm'),
       moment(timeSelected.to).format('HH:mm'),
       true,
+      timeSelected.name,
       timeSelected.username,
       uid,
     ])
@@ -170,7 +176,7 @@ const RequestedTable = ({ setData, data, update, header }) => {
     }
 
     setError(result)
-    // }
+    
   }
 
   const rejectedHandler = async () => {

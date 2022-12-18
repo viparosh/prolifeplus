@@ -243,7 +243,7 @@ const MyWorkerSchedule = ({workerRole}) => {
                 onClick={submitHandler}
                 className=" mx-2 ml-0 rounded-md border bg-primary p-2 px-4 text-slate-100"
               >
-                Validate and Save
+                Done
               </button>
             </div>
           </form>

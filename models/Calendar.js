@@ -10,6 +10,7 @@ const CalendarSchema = new mongoose.Schema({
       from: { type: Date },
       to: { type: Date },
       status: { type: Boolean },
+      name: {type: String},
       username: { type: String },
       schedID: { type: String },
     },
@@ -18,6 +19,7 @@ const CalendarSchema = new mongoose.Schema({
     {
       from: { type: Date },
       to: { type: Date },
+      name: {type: String},
       status: { type: Boolean },
       username: { type: String },
       schedID: { type: String },

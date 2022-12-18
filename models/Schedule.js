@@ -34,6 +34,7 @@ const ScheduleSchema = new mongoose.Schema(
     },
     time: {
       type: {
+        name: { type: String },
         from: { type: Date },
         to: { type: Date },
         username: { type: String },
