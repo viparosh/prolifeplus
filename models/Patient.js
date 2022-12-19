@@ -42,24 +42,19 @@ const PatientSchema = new mongoose.Schema({
     required: [true, 'Field must not be empty'],
   },
   spouse_fname: {
-    type: String,
-    required: [true, 'Field must not be empty'],
+    type: String
   },
   spouse_lname: {
-    type: String,
-    required: [true, 'Field must not be empty'],
+    type: String
   },
   spouse_birthDate: {
-    type: Date,
-    required: [true, 'Field must not be empty'],
+    type: Date
   },
   spouse_occupation: {
-    type: String,
-    required: [true, 'Field must not be empty'],
+    type: String
   },
   spouse_religion: {
-    type: String,
-    required: [true, 'Field must not be empty'],
+    type: String
   },
   no_previousPregnancies: {
     type: Number,
@@ -89,6 +84,10 @@ const PatientSchema = new mongoose.Schema({
   emergencyAddress: {
     type: String,
     required: [true, 'Field must not be empty'],
+  },
+  estimatedDateOfDelivery: {
+    type: Date,
+    required: [true, 'Field must not be empty']
   }
 })
 

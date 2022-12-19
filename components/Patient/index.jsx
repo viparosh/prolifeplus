@@ -23,6 +23,7 @@ const patient = ({ notSecretary, notMidWife, role }) => {
             setFetchData={setFetchData}
           />
         )}
+
         <div className="flex justify-between">
           <button
             onClick={() => setSearchMode(true)}
@@ -30,7 +31,16 @@ const patient = ({ notSecretary, notMidWife, role }) => {
           >
             <SearchSvg />
           </button>
-          {!notSecretary && (
+          
+          {(role == "secretary") && (
+            <div
+              className="flex items-center justify-center rounded-md border bg-orange-600 px-6 py-1 text-white"
+            >
+              <p>Cannot add patient due to role</p>
+            </div>
+          )}
+
+          {(role != "secretary") && (
             <button
               onClick={() => {
                 setModalMode('add')
@@ -41,7 +51,7 @@ const patient = ({ notSecretary, notMidWife, role }) => {
             </button>
           )}
         </div>
-        {/* display search results  */}
+        
         <p className="my-5 text-center">
           Welcome to patient section. Use the search bar to find patient
         </p>

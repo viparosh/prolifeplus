@@ -111,16 +111,16 @@ const ViewPatient = ({
                 </p>
               </div>
               <div className="mb-2 xl:flex">
-                <span className="font-semibold">ID:&nbsp;&nbsp;</span>
-                <p>{data?._id}</p>
-              </div>
-              <div className="mb-2 xl:flex">
                 <span className="font-semibold">Contact No#:&nbsp;&nbsp;</span>
                 <p>(+63) {data?.contact}</p>
               </div>
               <div className="mb-2 xl:flex">
                 <span className="font-semibold">Address:&nbsp;&nbsp;</span>
                 <p>{data?.address}</p>
+              </div>
+              <div className="mb-2 xl:flex">
+                <span className="font-semibold">Expect Date of Delivery:&nbsp;&nbsp;</span>
+                <p>{moment(data?.estimatedDateOfDelivery).format("MMMM DD, YYYY")}</p>
               </div>
             </div>
             {!isPatient && data?.fname && (

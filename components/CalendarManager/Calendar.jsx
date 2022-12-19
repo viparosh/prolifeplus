@@ -57,7 +57,7 @@ const Calendar = ({ dates, setDates, usage, selectionMode }) => {
                   ? 'bg-red-500 text-white transition-colors delay-100'
                   : dates.includes(renderDate(item, currentMonth))
                   ? 'bg-primary text-white'
-                  : 'text-secondaryText hover:bg-slate-200'
+                  : 'text-secondaryText text-slate-900 hover:text-white hover:bg-slate-400'
               }  duration-400 m-1 inline-block h-10 w-10 cursor-pointer rounded-full p-2 text-center text-white transition-colors`}
               onClick={() =>
                 moment(renderDate(item, currentMonth)).format('ddd') != 'Sun' &&

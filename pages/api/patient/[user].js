@@ -40,6 +40,7 @@ export default async (req, res) => {
               emergencyContact: 1,
               emergencyAddress: 1,
               sessionHistory: 1,
+              estimatedDateOfDelivery: 1,
             },
           },
           {
@@ -107,6 +108,7 @@ export default async (req, res) => {
             emergencyLnameErr: err?.emergencyLname?.message,
             emergencyContactErr: err?.emergencyContact?.message,
             emergencyAddressErr: err?.emergencyAddress?.message,
+            estimatedDateOfDeliveryErr: err?.estimatedDateOfDelivery?.message
           },
         })
       }

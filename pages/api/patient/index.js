@@ -62,6 +62,7 @@ export default async (req, res) => {
             emergencyLnameErr: err?.emergencyLname?.message,
             emergencyContactErr: err?.emergencyContact?.message,
             emergencyAddressErr: err?.emergencyAddress?.message,
+            estimatedDateOfDeliveryErr: err?.estimatedDateOfDelivery?.message
           }
         })
       }

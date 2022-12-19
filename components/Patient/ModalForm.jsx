@@ -39,7 +39,8 @@ const ModalForm = ({ mode, closeModal, data, setData, notWorker }) => {
   const previousCaesareansRef = useRef()
   const consecutiveMiscarriagesRef = useRef()
   const postpartumHemorrhageRef = useRef()
-  const importantNoteRef = useRef();
+  const importantNoteRef = useRef()
+  const estimatedDateOfDeliveryRef = useRef()
 
   const emergencyFnameRef = useRef()
   const emergencyLnameRef = useRef()
@@ -80,6 +81,7 @@ const ModalForm = ({ mode, closeModal, data, setData, notWorker }) => {
       importantNote:importantNoteRef.current?.value,
       emergencyFname: emergencyFnameRef.current?.value,
       emergencyLname: emergencyLnameRef.current?.value,
+      estimatedDateOfDelivery: estimatedDateOfDeliveryRef.current?.value,
       emergencyContact: emergencyContactRef.current?.value,
       emergencyAddress: emergencyAddressRef.current?.value,
     }
@@ -235,21 +237,21 @@ const ModalForm = ({ mode, closeModal, data, setData, notWorker }) => {
           <div className="p-4">
             <p className="font-bold">Spouse Information</p>
             {fieldText(
-              errors?.spouse_fnameErr,
+              null,
               'First name:',
               'spouse_fname',
               spouse_fnameRef,
               data?.spouse_fname
             )}
             {fieldText(
-              errors?.spouse_lnameErr,
+              null,
               'Last name:',
               'spouse_lname',
               spouse_lnameRef,
               data?.spouse_lname
             )}
             {fieldText(
-              errors?.spouse_birthDateErr,
+              null,
               'Birth Date: ',
               'spouse_birthdate',
               spouse_birthDateRef,
@@ -258,36 +260,49 @@ const ModalForm = ({ mode, closeModal, data, setData, notWorker }) => {
               'date'
             )}
             {fieldText(
-              errors?.spouse_religionErr,
+              null,
               'Religion: ',
               'spouse_religion',
               spouse_religionRef,
               data?.spouse_religion
             )}
             {fieldText(
-              errors?.spouse_occupationErr,
+              null,
               'Occupation: ',
               'spouse_occupation',
               spouse_occupationRef,
               data?.spouse_occupation
             )}
+
+            <p className="mt-9 mb-2 font-bold">
+                Important Suggestions
+            </p>
             {notWorker ?
               <div>
-              <p className="mt-9 mb-2 font-bold">
-                Important Note
-              </p>
+              
               <p><i>{data?.importantNote}</i></p>
               </div>
                :
                fieldTextarea(
                 null,
-                'Important Note: ',
+                'Staff Note: ',
                 'importantNote',
                 importantNoteRef,
                 data?.importantNote 
                 ) 
             }
+
+            {fieldText(
+              errors?.estimatedDateOfDeliveryErr,
+              'Estimated Date of Delivery: ',
+              'estimatedDateOfDelivery',
+              estimatedDateOfDeliveryRef,
+              data?.estimatedDateOfDelivery,
+              'date'
+            )}
+
           </div>
+
           <div className="p-4">
             <p className="font-bold">Obstetrical History</p>
             {fieldText(

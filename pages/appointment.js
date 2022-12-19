@@ -496,7 +496,7 @@ function appointment() {
                   <select
                     defaultValue={timeRef.current.value}
                     ref={timeRef}
-                    className="mt-2 block w-full rounded-md border border-inputBorder bg-white px-3 py-2"
+                    className="mt-2 text-sm block w-full rounded-md border border-inputBorder bg-white px-3 py-2"
                   >
                     <option value="none" disabled>
                       -- Select Time --
@@ -504,12 +504,13 @@ function appointment() {
                     {timeRange.current.value?.map(
                       (item, index) =>
                         item.status && (
-                          <option value={index} key={index}>
+                          <option className="text-sm" value={index} key={index}>
                          
                             {moment(item.from).format('hh:mm A')} -{' '}
-                            {moment(item.to).format('hh:mm A - ')} 
-                    
-                            {item.name}
+                            {moment(item.to).format('hh:mm A ')} 
+
+                            (Staff - 
+                            {' '+item.name})
                      
                           </option>
                         )
