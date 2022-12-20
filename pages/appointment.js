@@ -41,7 +41,8 @@ function appointment() {
   const timeRange = useRef([])
   const [modal, setModal] = useState(false)
   const [sampleTimer,setSampleTimer] = useState(0)
-  
+  const [staff,setStaff] = useState("n/a")
+
   const triggerTime = async() => {
     if (contactRef.current.value.length != 10 || contactRef.current.value[0] != 9) {
       setErrors({ ...errors, contactError: 'Invalid mobile number' })
@@ -432,6 +433,28 @@ function appointment() {
                     rows={3}
                     className="mt-2 block w-full rounded-md border border-inputBorder px-3 py-2"
                   />
+                </div>
+                <div className="flex mt-4 w-full">
+                  <div className="w-1/2">
+                    <label htmlFor="servicesOffered" className="block text-secondaryText">
+                      Service available
+                    </label>
+
+                    {(consultation == mode[0]) ? 
+                      <select className="border mt-2 rounded-md px-8 py-2">
+                        <option value="test">Option 1A</option>
+                        <option value="test">Optioasdasn 1B</option>
+                        <option value="test">Option 1C</option>
+                        <option value="test">Optionasdasd 1D</option>
+                      </select>:
+        
+                      <select className="border mt-2 rounded-md px-8 py-2">
+                        <option value="testx">Optioasdasn 2A</option>
+                        <option value="testy">Optiasdon 2B</option>
+                        <option value="testz">Option 2C</option>
+                        <option value="testa">Optiasdason 2D</option>
+                    </select>}
+                  </div>
                 </div>
               </div>
               <div className=" border-inputBorder lg:border-l lg:pl-10">
