@@ -175,6 +175,10 @@ const SessionSchema = new mongoose.Schema({
     type: String,
     default: '',
   },
+  babyName: {
+    type: String,
+    default: '',
+  },
   //Vaccine
   tt1: {
     type: String,

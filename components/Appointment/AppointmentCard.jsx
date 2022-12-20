@@ -17,6 +17,7 @@ const AppointmentCard = ({ schedules, setSelected }) => {
                 address,
                 concern,
                 status,
+                serviceType,
                 cancellationCode,
                 serverCancellationCode
               },
@@ -42,16 +43,19 @@ const AppointmentCard = ({ schedules, setSelected }) => {
                         <b>Contact No.#</b>: &nbsp; 0{contact}
                       </p>
                       <p className="text-[15px]">
-                        <b>Consultation Type:</b> &nbsp; {consultation}
-                      </p>
-                      <p className="text-[15px]">
                         <b>Concern:</b> &nbsp;{concern}
                       </p>
                       <p className="text-[15px]">
                         <b>Address:</b> &nbsp; {address}
                       </p>
+                      <p className="text-[15px]">
+                        <b>Service Type:</b> &nbsp; {serviceType}
+                      </p>
                     </div>
                     <div className="w-1/3">
+                      <p className="text-[15px]">
+                        <b>Consultation Type:</b> &nbsp; {consultation}
+                      </p>
                       <p className="text-[15px]">
                         <b>Cancellation Code:</b> &nbsp; {cancellationCode}
                       </p>

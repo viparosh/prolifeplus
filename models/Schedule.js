@@ -47,6 +47,9 @@ const ScheduleSchema = new mongoose.Schema(
       type: Date,
       required: [true, 'Please input the required fields'],
     },
+    serviceType:{
+      type: String
+    },
     monthYear: {
       type: String,
     },

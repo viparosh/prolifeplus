@@ -47,7 +47,7 @@ const Vaccine = ({
         <div className="grid grid-cols-2 gap-4 pb-4">
           {fieldSelect(
             null,
-            'TT1 @5mos of pregnancy:',
+            'Tetanus Toxoid @5mos of pregnancy:',
             'tt1',
             tt1Ref,
             [
@@ -59,7 +59,7 @@ const Vaccine = ({
           )}
           {fieldSelect(
             null,
-            'TT2 After a month:',
+            'Tetanus Toxoid After a month:',
             'tt2',
             tt2Ref,
             [
@@ -71,7 +71,7 @@ const Vaccine = ({
           )}
           {fieldSelect(
             null,
-            'TT3 After 6 months:',
+            'Tetanus Toxoid After 6 months:',
             'tt3',
             tt3Ref,
             [
@@ -83,7 +83,7 @@ const Vaccine = ({
           )}
           {fieldSelect(
             null,
-            'TT4 After 1 year:',
+            'Tetanus Toxoid After 1 year:',
             'tt4',
             tt4Ref,
             [
@@ -95,7 +95,7 @@ const Vaccine = ({
           )}
           {fieldSelect(
             null,
-            'TT5 After 1 year:',
+            'Tetanus Toxoid After 1 year:',
             'tt5',
             tt5Ref,
             [

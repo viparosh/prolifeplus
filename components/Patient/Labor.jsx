@@ -20,6 +20,8 @@ const Labor = ({
   const postpartumHemorrhageRef = useRef()
   const babyAliveRef = useRef()
   const babyHealthyRef = useRef()
+  const babyNameRef = useRef()
+
   const saveHandler = async () => {
     const newData = {
       ibf: ibfRef.current.value,
@@ -30,8 +32,9 @@ const Labor = ({
       postpartumHemorrhage: postpartumHemorrhageRef.current.value,
       babyAlive: babyAliveRef.current.value,
       babyHealthy: babyHealthyRef.current.value,
+      babyName: babyNameRef.current.value
     }
-    //copy
+
     let temp = sessionData
     let updateFunc = await updateSession(sessionId, newData)
     if (updateFunc.success) {
@@ -49,7 +52,7 @@ const Labor = ({
   return (
     <div className="flex h-sessionModal flex-col justify-between pb-10">
       <div className="px-8">
-        <div className="grid grid-cols-2 gap-4 pb-4">
+        <div className="grid grid-cols-2 gap-4">
           {fieldText(
             null,
             'Immediate breast feeding:',
@@ -102,10 +105,10 @@ const Labor = ({
           )}
           {fieldText(
             null,
-            'Postpartum hemmorrhage 5000cc:',
-            'postpartumHemorrhage',
-            postpartumHemorrhageRef,
-            sessionData[sessionIndex]?.postpartumHemorrhage,
+            'Name of baby:',
+            'babyName',
+            babyNameRef,
+            sessionData[sessionIndex]?.babyName,
             'text',
             !mode
           )}
@@ -133,6 +136,16 @@ const Labor = ({
             sessionData[sessionIndex]?.babyHealthy,
             !mode
           )}
+          {fieldText(
+            null,
+            'Postpartum hemmorrhage 5000cc:',
+            'postpartumHemorrhage',
+            postpartumHemorrhageRef,
+            sessionData[sessionIndex]?.postpartumHemorrhage,
+            'text',
+            !mode
+          )}
+        
         </div>
       </div>
       <SessionButtons

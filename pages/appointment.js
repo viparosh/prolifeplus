@@ -41,7 +41,28 @@ function appointment() {
   const timeRange = useRef([])
   const [modal, setModal] = useState(false)
   const [sampleTimer,setSampleTimer] = useState(0)
-  const [staff,setStaff] = useState("n/a")
+  const serviceRef = useRef()
+
+  const midService = [
+    "Prenatal appointments and routine pregnancy monitoring",
+    "Ultrasounds and prenatal blood work",
+    "Attending to birth and newborn care",
+    "Postpartum care",
+    "Educate on nutrition, lactation, fertility, reproductive health",
+    "Birth control and family planning",
+    "Pap tests and breast exams",
+    "Screenings for vaginal and sexually transmitted infections"
+  ]
+
+  const obService = [
+    "Pre-conception counseling and testing",
+    "Birth control (both permanent and temporary methods",
+    "Care for high-risk pregnancies",
+    "Prenatal care from pregnancy testing to post-partum care",
+    "Vaginal and surgical deliveries (C-section and VBAC)",
+    "Amniocentesis",
+    "Fetal assessment and monitoring (pregnancy to postpartum)"
+  ]
 
   const triggerTime = async() => {
     if (contactRef.current.value.length != 10 || contactRef.current.value[0] != 9) {
@@ -148,6 +169,7 @@ function appointment() {
     }
   }
   const submitHandler = async () => {
+    
     let cancelCode = generateString(5)
     let serverCancelCode = generateString(5)
     let extraError = {}
@@ -170,7 +192,8 @@ function appointment() {
       consultation: consultation,
       monthYear: moment().format('MMMM-YYYY'),
       cancellationCode: cancelCode,
-      serverCancellationCode: serverCancelCode
+      serverCancellationCode: serverCancelCode,
+      serviceType:serviceRef.current.value
     }
 
     // check verification code
@@ -258,6 +281,7 @@ function appointment() {
                   patientName: newData.firstName + ' ' + newData.lastName,
                   date: formattedDate.current,
                   timeslot: formattedTimeslot.current,
+                  serviceType:serviceRef.current,
                   contact: newData.contact,
                   cancellationCode: newData.cancellationCode,
                 })
@@ -435,24 +459,32 @@ function appointment() {
                   />
                 </div>
                 <div className="flex mt-4 w-full">
-                  <div className="w-1/2">
+                  <div className="w-full">
                     <label htmlFor="servicesOffered" className="block text-secondaryText">
                       Service available
                     </label>
 
                     {(consultation == mode[0]) ? 
-                      <select className="border mt-2 rounded-md px-8 py-2">
-                        <option value="test">Option 1A</option>
-                        <option value="test">Optioasdasn 1B</option>
-                        <option value="test">Option 1C</option>
-                        <option value="test">Optionasdasd 1D</option>
+                      <select ref={serviceRef} className="border mt-2 rounded-md w-full text-sm px-2 py-2">
+                        <option className="text-sm" value={obService[0]}>{obService[0]}</option>
+                        <option className="text-sm" value={obService[1]}>{obService[1]}</option>
+                        <option className="text-sm" value={obService[2]}>{obService[2]}</option>
+                        <option className="text-sm" value={obService[3]}>{obService[3]}</option>
+                        <option className="text-sm" value={obService[4]}>{obService[4]}</option>
+                        <option className="text-sm" value={obService[5]}>{obService[5]}</option>
+                        <option className="text-sm" value={obService[6]}>{obService[6]}</option>
+                        <option className="text-sm" value={obService[7]}>{obService[7]}</option>
                       </select>:
         
-                      <select className="border mt-2 rounded-md px-8 py-2">
-                        <option value="testx">Optioasdasn 2A</option>
-                        <option value="testy">Optiasdon 2B</option>
-                        <option value="testz">Option 2C</option>
-                        <option value="testa">Optiasdason 2D</option>
+                      <select ref={serviceRef} className="text-sm border mt-2 rounded-md px-2 w-full py-2">
+                        <option className="text-sm" value={midService[0]}>{midService[0]}</option>
+                        <option className="text-sm" value={midService[1]}>{midService[1]}</option>
+                        <option className="text-sm" value={midService[2]}>{midService[2]}</option>
+                        <option className="text-sm" value={midService[3]}>{midService[3]}</option>
+                        <option className="text-sm" value={midService[4]}>{midService[4]}</option>
+                        <option className="text-sm" value={midService[5]}>{midService[5]}</option>
+                        <option className="text-sm" value={midService[6]}>{midService[6]}</option>
+                        <option className="text-sm" value={midService[7]}>{midService[7]}</option>
                     </select>}
                   </div>
                 </div>
