@@ -11,6 +11,8 @@ const Login = () => {
   const passwordRef = useRef()
   const router = useRouter()
 
+  const [showPassword,setShowPassword] = useState(false)
+
   const submitHandler = async (e) => {
     e.preventDefault()
     const credentials = {
@@ -40,6 +42,7 @@ const Login = () => {
       setError('Incorrect credentials')
     }
   }
+
   return (
     <NoLayout>
       <div className="flex h-full w-full items-center justify-center">
@@ -66,12 +69,20 @@ const Login = () => {
               type="text"
               placeholder="Username"
             />
-            <input
-              className="mt-1 block w-full rounded-md border border-inputBorder px-3 py-3"
-              type="password"
-              ref={passwordRef}
-              placeholder="Password"
-            />
+            <div className="flex mt-1 w-full border border-inputBorder">
+              <input
+                className="rounded-md w-full px-3 py-3"
+                type={showPassword ? "text" : "password"}
+                ref={passwordRef}
+                placeholder="Password"
+              />
+              <button onClick={(e) => {
+                e.preventDefault()
+                setShowPassword(!showPassword)
+              }} className="text-sm bg-gray-700 text-white px-2 w-16">
+                Show
+              </button>
+            </div>
             <button className="w-full cursor-pointer rounded-md bg-primary py-3  px-4 text-white">
               Login
             </button>

@@ -7,10 +7,12 @@ import moment from 'moment'
 import { login } from '../services/user.services'
 
 const Login = () => {
+  
   const [error, setError] = useState()
   const usernameRef = useRef()
   const passwordRef = useRef()
   const router = useRouter()
+  const [showPassword,setShowPassword] = useState(false)
 
   const submitHandler = async (e) => {
     e.preventDefault()
@@ -59,25 +61,33 @@ const Login = () => {
                 type="text"
                 placeholder="Username (9XXXXXXXXX)"
               />
-              <input
-                className="mt-2 block w-full rounded-md border border-inputBorder p-3"
-                type="password"
-                ref={passwordRef}
-                placeholder="Password"
-              />
-              <button className="cursor-pointer rounded-md bg-primary p-3 text-white">
+              <div className="flex mt-1 w-full border border-inputBorder">
+                <input
+                  className="rounded-md w-full px-3 py-3"
+                  type={showPassword ? "text" : "password"}
+                  ref={passwordRef}
+                  placeholder="Password"
+                />
+                <button onClick={(e) => {
+                  e.preventDefault()
+                  setShowPassword(!showPassword)
+                }} className="text-sm bg-gray-700 text-white px-2 w-16">
+                  Show
+                </button>
+              </div>
+              <button className="text-sm cursor-pointer rounded-md bg-primary p-3 text-white">
                 Login
               </button>
             </div>
           </form>
           <div className="flex flex-col mt-4 gap-4 w-full">
             <Link href="/appointment">
-            <button className=" w-full cursor-pointer rounded-md bg-gray-600 p-3 text-white">
+            <button className="text-sm w-full cursor-pointer rounded-md bg-gray-500 p-3 text-white">
               Create Appointment
             </button>
             </Link>
             <Link href="/cancellation/">
-            <button className=" w-full cursor-pointer border border-gray-400 rounded-md bg-white p-3 text-gray-900">         
+            <button className="text-sm w-full cursor-pointer border border-gray-400 rounded-md bg-white p-3 text-gray-900">         
               Cancel Appointment           
             </button>
             </Link>

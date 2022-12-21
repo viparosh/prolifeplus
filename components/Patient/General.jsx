@@ -7,6 +7,7 @@ import {
 import { SessionButtons } from '../../components/'
 import { sessionFormat, updateSession } from '../../services/session.services'
 import moment from 'moment'
+
 const General = ({
   setEditMode,
   sessionIndex,
@@ -55,6 +56,13 @@ const General = ({
   const bronchilRef = useRef()
   const goiterRef = useRef()
   const successRef = useRef()
+  
+  const inputRef = useRef()
+  const [image, setImage] = useState(null)
+
+  const triggerFileSelectPopup = () => {
+    inputRef.current.click()
+  }
 
   const saveHandler = async () => {
     console.log(dateRef.current.value)
@@ -125,13 +133,21 @@ const General = ({
   const testFunc = () => {
     let monthNo = monthRef.current.value
     let visitNo = visitRef.current.value
-    console.log(monthNo)
-    console.log(visitNo)
 
     const selected =
       sessionData[sessionIndex].month[monthNo - 1].visit[visitNo - 1]
     console.log({ ...selectedSession, ...selected })
     setSelectedSession({ ...selectedSession, ...selected })
+  }
+
+  const onSelectFile = (event) => {
+    if (event.target.files && event.target.files.length >= 0) {
+      const reader = new FileReader()
+      reader.readAsDataURL(event.target.files[0])
+      reader.addEventListener('load', () => {
+        setImage(reader.result)
+      })
+    }
   }
 
   return (
@@ -349,7 +365,29 @@ const General = ({
               </div>
             </div>
             <p className="py-4">Baby Information</p>
-            <div className="flex gap-4 border-b-2 border-dashed border-slate-400 pb-4">
+            <div className="flex flex-col pb-4 border-b-2 border-dashed border-slate-400">
+              <div className="flex gap-x-4">
+                <button onClick={triggerFileSelectPopup} className="w-1/2 flex justify-center items-center h-56 border rounded-md">
+                
+                  <input
+                    onChange={onSelectFile}
+                    style={{ display: 'none' }}
+                    type="file"
+                    accept="image/*"
+                    ref={inputRef}
+                  />
+                  
+                  {image ?  <img className="w-full h-full" src={image}/> : "No Image"
+                  } 
+                </button>
+                <button className="w-1/2 flex justify-center items-center h-56 border rounded-md">
+                  No Image
+                </button>
+                <button className="w-1/2 flex justify-center items-center h-56 border rounded-md">
+                  No Image
+                </button>
+              </div>
+              <div className="flex w-full gap-x-4">
               {fieldText(
                 null,
                 'Heart Rate:',
@@ -368,6 +406,7 @@ const General = ({
                 'number',
                 !mode
               )}
+              </div>
             </div>
           </div>
           <div>
