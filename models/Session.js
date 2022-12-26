@@ -22,6 +22,18 @@ const SessionSchema = new mongoose.Schema({
       },
       visit: [
         {
+          ultrasound1: {
+            type: String,
+            default:''
+          },
+          ultrasound2: {
+            type: String,
+            default:''
+          },
+          ultrasound3: {
+            type: String,
+            default:''
+          },
           visitNumber: {
             type: String,
           },

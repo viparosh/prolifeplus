@@ -5,14 +5,10 @@ import { uploadLog } from '../../services/log.services'
 import { updatePatient } from '../../services/patient.services'
 import { changeProfile } from '../../services/user.services'
 import moment from 'moment'
-
 import {
-  getStorage,
   ref,
   uploadBytes,
-  getDownloadURL,
-  listAll,
-  list,
+  getDownloadURL
 } from 'firebase/storage'
 
 import { storage } from './firebase'

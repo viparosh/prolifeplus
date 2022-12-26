@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react'
+import React, { useRef, useState } from 'react'
 import {
   fieldText,
   fieldSelect,
@@ -7,6 +7,13 @@ import {
 import { SessionButtons } from '../../components/'
 import { sessionFormat, updateSession } from '../../services/session.services'
 import moment from 'moment'
+import {
+  ref,
+  uploadBytes,
+  getDownloadURL
+} from 'firebase/storage'
+import { v4 } from 'uuid'
+import { storage } from './firebase'
 
 const General = ({
   setEditMode,
@@ -16,6 +23,7 @@ const General = ({
   sessionData,
   setSessionData,
 }) => {
+
   const monthRef = useRef()
   const [selectedSession, setSelectedSession] = useState(
     sessionData[sessionIndex].month[0].visit[0]
@@ -59,14 +67,86 @@ const General = ({
   
   const inputRef = useRef()
   const [image, setImage] = useState(null)
+  const [previewImg,setPreviewImg] = useState(null)
 
-  const triggerFileSelectPopup = () => {
-    inputRef.current.click()
+  const inputRef2 = useRef()
+  const [image2, setImage2] = useState(null)
+  const [previewImg2,setPreviewImg2] = useState(null)
+  
+  const inputRef3 = useRef()
+  const [image3, setImage3] = useState(null)
+  const [previewImg3,setPreviewImg3] = useState(null)
+
+  const triggerFileSelectPopup = (tempInputRef) => {
+    tempInputRef.current.click()
+  }
+
+  const onUpload = (newData,imgVar,index) => {
+    if (imgVar) {
+      const imageRef = ref(storage, `ultrasound/${'exodus' + v4()} extend`)
+      uploadBytes(imageRef, imgVar).then((snapshot) => {
+
+      getDownloadURL(snapshot.ref).then(async (url) => {
+      
+        if(index == 1){
+          setImage(null)
+          setPreviewImg(null)
+          newData.visit[0].ultrasound1 = url
+          setSelectedSession.ultrasound1 = url
+
+        }else if(index == 2){
+          setImage2(null)
+          setPreviewImg2(null)
+
+          newData.visit[0].ultrasound2 = url
+          setSelectedSession.ultrasound2 = url
+          
+        }else{
+          setImage3(null)
+          setPreviewImg3(null)   
+          newData.visit[0].ultrasound3 = url
+          setSelectedSession.ultrasound3 = url
+          
+        }
+
+        extendSaveHandler(newData)
+
+        })
+      })
+    }
+  }
+
+  const extendSaveHandler = async (newData) => {
+    const formattedData = sessionFormat(sessionData[sessionIndex].month, [
+      newData,
+    ])
+
+    let updateFunc = await updateSession(sessionId, { month: formattedData })
+    if (updateFunc.success) {
+      let temp = sessionData
+      const temp_session = {
+        ...sessionData[sessionIndex],
+        month: formattedData,
+      }
+
+      temp[sessionIndex] = temp_session
+      setSessionData(temp)
+      setSelectedSession(
+        temp_session.month[monthRef.current.value - 1].visit[
+          visitRef.current.value - 1
+        ]
+      )
+
+      const ty =
+        temp_session.month[monthRef.current.value - 1].visit[
+          visitRef.current.value - 1
+        ]
+
+        setEditMode(false)
+    }
   }
 
   const saveHandler = async () => {
-    console.log(dateRef.current.value)
-    console.log(nextVisitRef.current.value)
     const newData = {
       monthNumber: monthRef.current.value,
       visit: [
@@ -99,55 +179,48 @@ const General = ({
           diabetes: diabetesRef.current.value,
           bronchil: bronchilRef.current.value,
           goiter: goiterRef.current.value,
-          emergencyPlan: emergencyPlanRef.current.value,
+          emergencyPlan: emergencyPlanRef.current.value,            
+          ultrasound1:selectedSession?.ultrasound1,
+          ultrasound2: selectedSession?.ultrasound2,
+          ultrasound3: selectedSession?.ultrasound3
         },
       ],
     }
-    const formattedData = sessionFormat(sessionData[sessionIndex].month, [
-      newData,
-    ])
-    let updateFunc = await updateSession(sessionId, { month: formattedData })
-    if (updateFunc.success) {
-      let temp = sessionData
-      const temp_session = {
-        ...sessionData[sessionIndex],
-        month: formattedData,
-      }
 
-      temp[sessionIndex] = temp_session
-      setSessionData(temp)
-      setSelectedSession(
-        temp_session.month[monthRef.current.value - 1].visit[
-          visitRef.current.value - 1
-        ]
-      )
-      const ty =
-        temp_session.month[monthRef.current.value - 1].visit[
-          visitRef.current.value - 1
-        ]
-      console.log(ty.tuberculosis)
-      setEditMode(false)
+    if(image != null || image2 != null || image3 != null){
+      if(image != null) await onUpload(newData,image,1)
+      if(image2 != null) await onUpload(newData,image2,2)
+      if(image3 != null) await onUpload(newData,image3,3)
+    }else{
+      extendSaveHandler(newData)
     }
+    
   }
 
   const testFunc = () => {
+    setImage(null)
+    setPreviewImg(null)
+    setImage2(null)
+    setPreviewImg2(null)
+    setImage3(null)
+    setPreviewImg3(null)
+
     let monthNo = monthRef.current.value
     let visitNo = visitRef.current.value
 
     const selected =
       sessionData[sessionIndex].month[monthNo - 1].visit[visitNo - 1]
-    console.log({ ...selectedSession, ...selected })
     setSelectedSession({ ...selectedSession, ...selected })
+
   }
 
-  const onSelectFile = (event) => {
-    if (event.target.files && event.target.files.length >= 0) {
-      const reader = new FileReader()
-      reader.readAsDataURL(event.target.files[0])
-      reader.addEventListener('load', () => {
-        setImage(reader.result)
-      })
-    }
+  const onSelectFile = (event,tmpSetImage,tmpSetPreviewImg) => {
+    const reader = new FileReader()
+    reader.readAsDataURL(event.target.files[0])
+    reader.addEventListener('load', () => {
+        tmpSetImage(event.target.files[0])
+        tmpSetPreviewImg(reader.result)
+    })
   }
 
   return (
@@ -159,7 +232,6 @@ const General = ({
       )}
       <div className="grid grid-cols-1 gap-4 px-8 sm:grid-cols-3">
         <div className="col-span-2">
-          {/* first column  */}
           <div className="mb-2 flex gap-4 border-b-2 border-dashed border-slate-400  pb-4 ">
             {fieldSelect(
               null,
@@ -364,27 +436,56 @@ const General = ({
                 )}
               </div>
             </div>
+
             <p className="py-4">Baby Information</p>
             <div className="flex flex-col pb-4 border-b-2 border-dashed border-slate-400">
               <div className="flex gap-x-4">
-                <button onClick={triggerFileSelectPopup} className="w-1/2 flex justify-center items-center h-56 border rounded-md">
-                
+                <button onClick={() => {if(mode) { triggerFileSelectPopup(inputRef)}}} className="w-1/2 flex justify-center items-center h-56 border rounded-md">
                   <input
-                    onChange={onSelectFile}
-                    style={{ display: 'none' }}
-                    type="file"
-                    accept="image/*"
-                    ref={inputRef}
+                      onChange={() => onSelectFile(event,setImage,setPreviewImg)}
+                      style={{ display: 'none' }}
+                      type="file"
+                      accept="image/*"
+                      ref={inputRef}
                   />
+                
+                  {!mode ? (selectedSession?.ultrasound1 == "")  ? "No Image": <img className="w-full h-full" src={selectedSession?.ultrasound1}/> :
+                   (image) ? 
+                   <img className="w-full h-full" src={previewImg}/> : 
+                   "Upload Image"}
                   
-                  {image ?  <img className="w-full h-full" src={image}/> : "No Image"
-                  } 
+                  
                 </button>
-                <button className="w-1/2 flex justify-center items-center h-56 border rounded-md">
-                  No Image
+                <button onClick={() => {if(mode) { triggerFileSelectPopup(inputRef2)}}} className="w-1/2 flex justify-center items-center h-56 border rounded-md">
+                  <input
+                      onChange={() => onSelectFile(event,setImage2,setPreviewImg2)}
+                      style={{ display: 'none' }}
+                      type="file"
+                      accept="image/*"
+                      ref={inputRef2}
+                  />
+                 
+                  {!mode ? (selectedSession?.ultrasound2 == "") ? "No Image": <img className="w-full h-full" src={selectedSession?.ultrasound2}/> :
+                   (image2) ? 
+                   <img className="w-full h-full" src={previewImg2}/> : 
+                   "Upload Image"}
+                
                 </button>
-                <button className="w-1/2 flex justify-center items-center h-56 border rounded-md">
-                  No Image
+                <button onClick={() => {if(mode) { triggerFileSelectPopup(inputRef3)}}} className="w-1/2 flex justify-center items-center h-56 border rounded-md">
+                  <input
+                      onChange={() => onSelectFile(event,setImage3,setPreviewImg3)}
+                      style={{ display: 'none' }}
+                      type="file"
+                      accept="image/*"
+                      ref={inputRef3}
+                  />
+                 
+                 {!mode ? (selectedSession?.ultrasound3 == "") ? "No Image": <img className="w-full h-full" src={selectedSession?.ultrasound3}/> :
+                   (image3) ? 
+                   <img className="w-full h-full" src={previewImg3}/> : 
+                   "Upload Image"}
+
+
                 </button>
               </div>
               <div className="flex w-full gap-x-4">
