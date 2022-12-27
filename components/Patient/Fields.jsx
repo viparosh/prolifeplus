@@ -37,6 +37,7 @@ export const fieldText = (
     </div>
   )
 }
+
 export const fieldSelect = (
   newError,
   label,
@@ -113,7 +114,7 @@ export const fieldTextarea = (
           disabled={disabled}
           ref={ref}
           id={id}
-          defaultValue={defaultValue}
+          defaultValue={label == "Reason:" ? "Time overlaps" : defaultValue}
           className="mt-2 block w-full rounded-md border border-inputBorder px-3 py-2"
         />
       )}

@@ -142,7 +142,7 @@ const General = ({
           visitRef.current.value - 1
         ]
 
-        setEditMode(false)
+      setEditMode(false)
     }
   }
 
@@ -198,6 +198,7 @@ const General = ({
   }
 
   const testFunc = () => {
+
     setImage(null)
     setPreviewImg(null)
     setImage2(null)

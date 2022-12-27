@@ -20,13 +20,13 @@ const RequestedTable = ({ setData, data, update, header }) => {
   const [timeSelected, setTimeSelected] = useState()
   const [error, setError] = useState(null)
   const [modal, setModal] = useState()
-  const reasonRef = useRef()
+  const reasonRef = useRef("Time overlaps with another schedule")
   const [pageNumber, setPageNumber] = useState(0)
 
   useEffect(async() => {
     setModal(false)
     const user = await getUser()
-    
+  
     if(user.success){
       setAuthUser(user.data)
     }
